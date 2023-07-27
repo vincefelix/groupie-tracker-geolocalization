@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/home.css">
+    <title>GROUPIE</title>
+</head>
+<body>
+    <nav>
+        <a href="/">home</a>
+
+        <form action="/search" method="post">
+         {{if .Nil}}
+            <input type="search" name="q" id="search" placeholder="type here ..." list="sug1" value="{{.Q}}">
+            <datalist id="sug1">    
+                {{range .Res}}
+                <option value="{{.Name}}  -  artists/band"></option>
+                <option value="{{.Creation_date}}  -  creation date"></option>
+                <option value="{{.First_album}}  -  First album"></option>
+                {{end}}
+                {{range .Memb}}
+                <option value="{{.}}  -  Member"></option>
+                {{end}}
+                
+                {{range .Resloc}}
+            <option value="{{.}}  -  Location"></option>
+            {{end}}
+
+            </datalist> 
+            {{else}}
+            <input type="search" name="q" id="searchu" placeholder="type here ..." list="sug">
+            <datalist id="sug">    
+                {{range .Res}}
+                <option value="{{.Name}}  -  artists/band"></option>
+                <option value="{{.Creation_date}}  -  creation date"></option>
+                <option value="{{.First_album}}  -  First album"></option>
+                {{end}}
+                {{range .Memb}}
+                <option value="{{.}}  -  Member"></option>
+                {{end}}
+                
+                {{range .Resloc}}
+            <option value="{{.}}  -  Location"></option>
+            {{end}}
+            {{end}}
+
+            </datalist> 
+            <button type="submit">search</button>
+        </form>
+
+        <form action="/filter" method="POST">
+            <label for="cread">Creation date
+                <input type="number" min="1958" max="2015" name="mincread" id ="mincread" value="1958" required>
+                <input type="range" name="cread" id="creadmin" min="1959" max="2015" value="1958">
+                <input type="range" name="cread" id="creadmax" min="1958" max="2015" value="2015">
+                <input type="number" max="2015" min="1958" name="maxcread" id ="maxcread" value="2015" required>
+        </label>
+        <label for="firstd">First album
+            <input type="date" name="firstd_min" id="firstd_min" value="1963-07-31" min="1963-07-31" max="2018-11-15" required>
+            <input type="date" name="firstd_max" id="firstd_max" value="2018-11-15" min="1963-07-31" max="2018-11-15" required>
+        </label>
+        <label>Members
+            <label for="1">1
+            <input type="checkbox" name="memb1" id="1" value="1">
+        </label>
+        <label for="2">2
+            <input type="checkbox" name="memb2" id="2"  value="2">
+        </label>
+        <label for="3">3
+            <input type="checkbox" name="memb3" id="3"  value="3">
+        </label>
+        <label for="4">4
+            <input type="checkbox" name="memb4" id="4"  value="4">
+        </label>
+        <label for="5">5
+            <input type="checkbox" name="memb5" id="5"  value="5">
+        </label>
+        <label for="6">6
+            <input type="checkbox" name="memb6" id="6"  value="6">
+        </label>
+        <label for="7">7
+            <input type="checkbox" name="memb7" id="7"  value="7">
+        </label>
+        <label for="8">8
+            <input type="checkbox" name="memb8" id="8"  value="8">
+        </label>
+        </label>
+        <label for="loc">Location
+            <select name="loca" id="loc">
+                <option value="">pick a city</option>
+                {{range .Resloc}}
+                <option value="{{.}}">{{.}}</option>
+                {{end}}
+            </select>
+        </label>
+        <button type="submit">filter</button>
+        </form>
+        <a href="/localization">location</a>
+    </nav>
+
+    <header>
+    <h1>ARTIST PART</h1>
+</header>
+
+    <main>
+        {{if .Nil}}
+        {{range .Research}}
+        <div class="card">
+            <a href="/info/{{.Id}}"> <img src="{{.Image}}" alt="Artist Image"></a><br>
+            <p><strong>Name:</strong> {{.Name}} </p>
+        </div>
+        {{end}}
+        {{else}}
+        {{range .Res}}
+        <div class="card">
+           <a href="/info/{{.Id}}"> <img src="{{.Image}}" alt="Artist Image"></a><br>
+          <p><strong>Name:</strong> {{.Name}} </p>
+        </div>
+        {{end}}
+        {{end}}
+
+    </main>
+    <hr>
+</body>
+</html>

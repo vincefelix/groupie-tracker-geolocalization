@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>groupie-tracker</title>
+</head>
+<body>
+    <nav>
+        <a href="/">home</a>
+    </nav>
+    <header>
+        <form action="/localization" method="post">
+            <input type="search" name="q" id="q2" list="artname" placeholder="Artist name" value="{{.Q}}">
+            <datalist id="artname">
+                {{range .Name}}
+                <option value="{{.}}"></option>
+                {{end}}
+            </datalist>
+        </form>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>zone</th>
+                    <th>lat</th>
+                    <th>lng</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $key, $value:= .Locmap}}
+                <tr>
+                    <td>{{$key}}</td>
+                    <td>{{$value.Lat}}</td>
+                    <td>{{$value.Lng}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

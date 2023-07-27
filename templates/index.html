@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/home.css">
+    <title>groupie</title>
+</head>
+<body>
+    <header>
+        <form action="/search" method="post">
+            <input type="search" name="q" id="search" placeholder="type here ..." list="sug">
+            <datalist id="sug">
+                
+                {{range .Res}}
+                <option value="{{.Name}}  -  artists/band"></option>
+                <option value="{{.Creation_date}}  -  creation date"></option>
+                <option value="{{.First_album}}  -  First album"></option>
+                {{end}}
+                {{range .Memb}}
+                <option value="{{.}}  -  Member"></option>
+                {{end}}
+                
+                {{range .Resloc}}
+            <option value="{{.}}  -  Location"></option>
+            {{end}}
+
+            </datalist> 
+            <button type="submit">search</button>
+        </form>
+        <a href="/localization">location</a>
+    <h1>GROUPIE TRACKER</h1>
+    <h3>TOP ARTISTS</h3>
+</header>
+<main>
+    
+
+        {{range .Top_artist}}
+        <div class="card">
+           <a href="/info/{{.Id}}"> <img src="{{.Image}}" alt="art"></a>
+            <p>{{.Name}}</p>
+        </div>
+        {{end}}
+    </main>
+    <hr>
+    <hr>
+  <a href="/artists"><button>see more ...</button></a>
+</body>
+</html>

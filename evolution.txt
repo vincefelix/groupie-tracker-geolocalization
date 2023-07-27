@@ -1,0 +1,5 @@
+à rajouter:
+-front end
+-completer le fichier test 
+-rediger le readme
+-integrer dans le readme la structuration du repo

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupie</title>
+</head>
+<body>
+    <h1>erreur {{.}}</h1>
+    {{if eq . "500"}}
+    <p>Internal servor error</p>
+    {{else if  eq . "404"}}
+    <p>Page not found</p>
+    {{else}}
+    <p>Method not allowed</p>
+    {{end}}
+</body>
+</html>
