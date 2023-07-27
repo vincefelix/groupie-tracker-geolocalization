@@ -41,6 +41,19 @@ func TestSearchHandler(t *testing.T) {
 	}
 }
 
+func TestLocalizationHandler(t *testing.T) {
+	requete, err := http.NewRequest("POST", "/localization", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	enregistre := httptest.NewRecorder()
+	Func.Localization(enregistre, requete)
+	if status := enregistre.Code; status != http.StatusOK {
+		t.Errorf("Wrong status code. Expected %v, got %v", http.StatusOK, status)
+	}
+}
+
 func TestNorepeatart(t *testing.T) {
 	test := []struct {
 		Case     []fetch.Artists
@@ -102,6 +115,21 @@ func TestNorepeat(t *testing.T) {
 	}
 }
 
+func TestReverse(t *testing.T) {
+	str := "Masseck-Thiaw-le-grand-dev"
+	want := "dev-grand-le-Thiaw-Masseck"
+	str2 := "Essayons pour-voir"
+	want2 := "voir-Essayons pour"
+	got := Funca.Reverse(str)
+	if !reflect.DeepEqual(want, got) {
+		t.Fatalf("expected: %v, got: %v", want, got)
+	}
+	got2 := Funca.Reverse(str2)
+	if !reflect.DeepEqual(want2, got2) {
+		t.Fatalf("expected: %v, got: %v", want2, got2)
+	}
+}
+
 func TestValidtab(t *testing.T) {
 	idtest1 := []int{2, 4, 3, 6, 9, 7}
 	restest1 := []int{1, 5, 4, 7, 9}
@@ -146,7 +174,7 @@ func TestArtistsHandler(t *testing.T) {
 
 func TestFilter(t *testing.T) {
 
-	requete, err := http.NewRequest("GET", "/filter", nil)
+	requete, err := http.NewRequest("POST", "/filter", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -185,6 +213,7 @@ func TestHandlers(t *testing.T) {
 	t.Run("Info", TestInfoHandler)
 	t.Run("Search", TestSearchHandler)
 	t.Run("Filter", TestFilter)
+	t.Run("Localization", TestLocalizationHandler)
 }
 
 func TestMain(t *testing.T) {
