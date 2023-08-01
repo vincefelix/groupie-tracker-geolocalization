@@ -1,126 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/home.css">
-    <title>GROUPIE</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/css/foundation.css" />
+  <link rel="stylesheet" href="/static/css/app.css" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/styleartist.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+  <title>Groupie-Tracker</title>
 </head>
+
 <body>
-    <nav>
-        <a href="/">home</a>
+  <!-- menu -->
+  <div class="menuartist">
+    <!-- responsive toggle bar -->
+    <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="large">
+      <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+      <div class="title-bar-title">Menu</div>
+    </div>
 
-        <form action="/search" method="post">
-         {{if .Nil}}
-            <input type="search" name="q" id="search" placeholder="type here ..." list="sug1" value="{{.Q}}">
-            <datalist id="sug1">    
-                {{range .Res}}
-                <option value="{{.Name}}  -  artists/band"></option>
-                <option value="{{.Creation_date}}  -  creation date"></option>
-                <option value="{{.First_album}}  -  First album"></option>
-                {{end}}
-                {{range .Memb}}
-                <option value="{{.}}  -  Member"></option>
-                {{end}}
-                
-                {{range .Resloc}}
-            <option value="{{.}}  -  Location"></option>
-            {{end}}
+    <div class="top-bar stacked-for-medium menuhome" id="responsive-menu">
+      <div class="top-bar-left">
+        <ul class="dropdown menu vertical large-horizontal" data-dropdown-menu>
+          <li class="menu-text" id="styletextmenu">Groupie-Tracker</li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/artists">Artists</a></li>
+          <li><a href="/localization">localization</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <!-- icone  -->
+        <ul class="menu">
+          <li id="iconeSearch">
+            <!-- <span>Search</span> -->
+            <span class="material-symbols-outlined">search</span>
+          </li>
+          <li><span>❙</span></li>
+          <li id="iconeFilter">
+            <!-- <span>Filter</span> -->
+            <span class="material-symbols-outlined"> tune </span>
+          </li>
+          <!-- <li><span>❙</span></li>
+  <li id="iconeLight">
+    <span>Light</span>
+    <span class="material-symbols-outlined"> light_mode </span>
+  </li> -->
+        </ul>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <!-- form search -->
+  <form action="/search" method="post" id="searchForm">
+    <!-- <ul class="menu"> -->
+    <!-- <div class="becenter"> -->
+    {{if .Nil}}
+    <!-- <li> -->
+    <!-- <div class="cell large-10"> -->
 
-            </datalist> 
-            {{else}}
-            <input type="search" name="q" id="searchu" placeholder="type here ..." list="sug">
-            <datalist id="sug">    
-                {{range .Res}}
-                <option value="{{.Name}}  -  artists/band"></option>
-                <option value="{{.Creation_date}}  -  creation date"></option>
-                <option value="{{.First_album}}  -  First album"></option>
-                {{end}}
-                {{range .Memb}}
-                <option value="{{.}}  -  Member"></option>
-                {{end}}
-                
-                {{range .Resloc}}
-            <option value="{{.}}  -  Location"></option>
-            {{end}}
-            {{end}}
+    <input type="search" name="q" id="search" placeholder="type here ..." list="sug1" value="{{.Q}}" />
+    <!-- </li> -->
+    <datalist id="sug1">
+      {{range .Res}}
+      <option value="{{.Name}}  -  artists/band"></option>
+      <option value="{{.Creation_date}}  -  creation date"></option>
+      <option value="{{.First_album}}  -  First album"></option>
+      {{end}} {{range .Memb}}
+      <option value="{{.}}  -  Member"></option>
+      {{end}} {{range .Resloc}}
+      <option value="{{.}}  -  Location"></option>
+      {{end}}
+    </datalist>
+    <!-- </div> -->
+    {{else}}
+    <!-- <li> -->
+    <!-- <div class="cell large-10"> -->
 
-            </datalist> 
-            <button type="submit">search</button>
-        </form>
+    <input type="search" id="searchu" name="q" placeholder="type here ..." list="sug" />
+    <!-- </li> -->
+    <datalist id="sug1">
+      {{range .Res}}
+      <option value="{{.Name}}  -  artists/band"></option>
+      <option value="{{.Creation_date}}  -  creation date"></option>
+      <option value="{{.First_album}}  -  First album"></option>
+      {{end}} {{range .Memb}}
+      <option value="{{.}}  -  Member"></option>
+      {{end}} {{range .Resloc}}
+      <option value="{{.}}  -  Location"></option>
 
-        <form action="/filter" method="POST">
-            <label for="cread">Creation date
-                <input type="number" min="1958" max="2015" name="mincread" id ="mincread" value="1958" required>
-                <input type="range" name="cread" id="creadmin" min="1959" max="2015" value="1958">
-                <input type="range" name="cread" id="creadmax" min="1958" max="2015" value="2015">
-                <input type="number" max="2015" min="1958" name="maxcread" id ="maxcread" value="2015" required>
-        </label>
-        <label for="firstd">First album
-            <input type="date" name="firstd_min" id="firstd_min" value="1963-07-31" min="1963-07-31" max="2018-11-15" required>
-            <input type="date" name="firstd_max" id="firstd_max" value="2018-11-15" min="1963-07-31" max="2018-11-15" required>
-        </label>
-        <label>Members
-            <label for="1">1
-            <input type="checkbox" name="memb1" id="1" value="1">
-        </label>
-        <label for="2">2
-            <input type="checkbox" name="memb2" id="2"  value="2">
-        </label>
-        <label for="3">3
-            <input type="checkbox" name="memb3" id="3"  value="3">
-        </label>
-        <label for="4">4
-            <input type="checkbox" name="memb4" id="4"  value="4">
-        </label>
-        <label for="5">5
-            <input type="checkbox" name="memb5" id="5"  value="5">
-        </label>
-        <label for="6">6
-            <input type="checkbox" name="memb6" id="6"  value="6">
-        </label>
-        <label for="7">7
-            <input type="checkbox" name="memb7" id="7"  value="7">
-        </label>
-        <label for="8">8
-            <input type="checkbox" name="memb8" id="8"  value="8">
-        </label>
-        </label>
-        <label for="loc">Location
-            <select name="loca" id="loc">
-                <option value="">pick a city</option>
-                {{range .Resloc}}
-                <option value="{{.}}">{{.}}</option>
-                {{end}}
-            </select>
-        </label>
-        <button type="submit">filter</button>
-        </form>
-        <a href="/localization">location</a>
-    </nav>
+      {{end}}
+    </datalist>
+    <!-- </div> -->
+    {{end}}
+    <!-- <li> -->
+    <button type="submit" class="button">Search</button>
+    <!-- <div class="cell large-2">
+            </div> -->
+    <!-- </li> -->
+    <!-- </ul> -->
+    <!-- </div> -->
+  </form>
+  <!-- form filter -->
 
-    <header>
-    <h1>ARTIST PART</h1>
-</header>
-
-    <main>
-        {{if .Nil}}
-        {{range .Research}}
-        <div class="card">
-            <a href="/info/{{.Id}}"> <img src="{{.Image}}" alt="Artist Image"></a><br>
-            <p><strong>Name:</strong> {{.Name}} </p>
+  <form action="/filter" method="post" id="filterForm">
+    <div class="grid-x grid-margin-x">
+      <div class="cell large-12">
+        <h1>Make your Choice!!!</h1>
+      </div>
+      <fieldset class="fieldset cell large-6">
+        <legend>Creation date</legend>
+        <div class="grid-x grid-margin-x">
+          <div class="cell large-3 small-3">
+            <input type="number" name="mincread" id="mincread" required />
+          </div>
+          <div class="cell large-6 small-6" id="range">
+            <div class="slider" data-slider data-initial-start="1963" data-initial-end="2000" data-start="1963"
+              data-end="2015">
+              <span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="mincread"></span>
+              <span class="slider-fill" data-slider-fill></span>
+              <span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="maxcread"></span>
+            </div>
+          </div>
+          <div class="cell large-3 small-3">
+            <input type="number" id="maxcread" name="maxcread" required />
+          </div>
         </div>
-        {{end}}
-        {{else}}
-        {{range .Res}}
-        <div class="card">
-           <a href="/info/{{.Id}}"> <img src="{{.Image}}" alt="Artist Image"></a><br>
-          <p><strong>Name:</strong> {{.Name}} </p>
-        </div>
-        {{end}}
-        {{end}}
+      </fieldset>
 
-    </main>
-    <hr>
+      <fieldset class="fieldset cell large-6">
+        <legend>First Album</legend>
+        <!-- <label for="firstd">First album -->
+        <div class="grid-margin-x grid-x">
+          <div class="cell large-6">
+            <input type="date" name="firstd_min" id="firstd_min" value="1963-07-31" min="1963-07-31" max="2018-11-15"
+              required />
+          </div>
+          <div class="cell large-6">
+            <input type="date" name="firstd_max" id="firstd_max" value="2018-11-15" min="1963-07-31" max="2018-11-15"
+              required />
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="fieldset cell large-6">
+        <legend>Location</legend>
+        <select name="loca" id="loc">
+          <option value="">pick a city</option>
+          {{range .Resloc}}
+          <option value="{{.}}">{{.}}</option>
+          {{end}}
+        </select>
+      </fieldset>
+      <fieldset class="fieldset cell large-6">
+        <legend>Nº Members</legend>
+        <input id="1" type="checkbox" value="1" /><label for="1">1</label>
+        <input id="2" type="checkbox" value="2" /><label for="2">2</label>
+        <input id="3" type="checkbox" value="3" /><label for="3">3</label>
+        <input id="4" type="checkbox" value="4" /><label for="4">4</label>
+        <input id="5" type="checkbox" value="5" /><label for="5">5</label>
+        <input id="6" type="checkbox" value="6" /><label for="6">6</label>
+        <input id="7" type="checkbox" value="7" /><label for="7">7</label>
+      </fieldset>
+      <div class="cell large-12">
+        <input type="submit" value="submit" class="button primary" />
+      </div>
+      <!-- <hr \> -->
+      <!-- <hr \ /> -->
+    </div>
+    <!-- <div class="grid-margin-x grid-x">
+            <div class="cell large-6">
+                 <input type="submit" value="submit" /> -->
+    <!-- </div>
+          
+        </div>  -->
+  </form>
+
+  <!-- end form filter -->
+
+  {{if .Nil}}
+  <div class="blackbandedeux">
+    <h1>Artists</h1>
+  </div>
+  <hr \ />
+  <div class="givemarge grid-x grid-margin-x" data-equalizer data-equalize-on="medium" id="test-eq">
+    {{range .Research}}
+
+    <div class="cell small-12 medium-4 large-3">
+      <div class="callout" data-equalizer-watch>
+        <a href="/info/{{.Id}}"><img src="{{.Image}}" alt="{{.Name}}" />
+          <h5>{{.Name}}</h5>
+        </a>
+      </div>
+    </div>
+    {{else}}
+    <div class="noresult">
+      <p>Oups!No result... Please try again!!!</p>
+    </div>
+    <div class="espaceblack"></div>
+    {{end}}
+  </div>
+  {{else}}
+  <div class="blackbandedeux">
+    <h1>Artists</h1>
+  </div>
+  <hr \ />
+  <div class="givemarge grid-x grid-margin-x" data-equalizer data-equalize-on="medium" id="test-eq">
+    {{range .Res}}
+
+    <div class="cell small-6 medium-4 large-3">
+      <div class="callout" data-equalizer-watch>
+        <a href="/info/{{.Id}}"><img src="{{.Image}}" alt="{{.Name}}" />
+          <h5>{{.Name}}</h5>
+        </a>
+      </div>
+    </div>
+    {{end}}
+  </div>
+  {{end}}
+
+  <hr />
+
+  <footer>
+    <div class="footer">
+      <p>&copy; 2023 MVS</p>
+    </div>
+  </footer>
+
+  <script src="/static/js/vendor/jquery.js"></script>
+  <script src="/static/js/vendor/what-input.js"></script>
+  <script src="/static/js/vendor/foundation.js"></script>
+  <script src="/static/js/app.js"></script>
+  <script src="/static/effects.js"></script>
 </body>
+
 </html>
