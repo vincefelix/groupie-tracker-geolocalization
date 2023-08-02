@@ -57,7 +57,17 @@ func Geoloc(w http.ResponseWriter, r *http.Request, concert_loc string) (float64
 	}
 
 	// retrieving the coordinates
-	initial_tab := geocoords.Results[1] // initial structure
+	var initial_tab struct {
+		Geometry Coord `json:"geometry"`
+	}
+
+	if len(geocoords.Results) > 2 {
+		initial_tab = geocoords.Results[0] // initial structure
+	} else if len(geocoords.Results) == 1 {
+		initial_tab = geocoords.Results[0] // initial structure
+	} else {
+		initial_tab = geocoords.Results[1] // initial structure
+	}
 
 	var lat, lng float64
 	lat = initial_tab.Geometry.Lat // affecting lat data
