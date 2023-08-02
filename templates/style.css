@@ -73,7 +73,10 @@ img {
   background-color: transparent;
 }
 
-
+/*open map button*/
+#openmap {
+  margin-left: 2%;
+}
 
 img {
   width: auto;

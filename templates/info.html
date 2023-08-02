@@ -103,6 +103,12 @@
         <li>{{.}}</li>
         {{end}}
   </ul>
+  
+  <form action="/localization" method="post" style="display:contents;"> 
+    <input type="hidden" name="q" value="{{.The_arts.Name}}">
+    <button type="submit" class="button primary prev" id="openmap">Open in map</button>
+  </form>
+
 </div>
 
 <hr \>

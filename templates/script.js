@@ -24,8 +24,8 @@ polyline.push([tabresult[0].latitude,tabresult[0].longitude])
     var marker = L.marker([tabresult[0].latitude, tabresult[0].longitude]).addTo(map);
     marker.bindPopup(tabresult[0].city).openPopup();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 13,
-        // noWrap: true,
+        maxZoom: 23,
+        noWrap: true,
         attribution: '© OpenStreetMap'
     }).addTo(map);
     console.log("ville", tabresult[0].city, "lar", tabresult[0].latitude, "lon", tabresult[0].longitude)
@@ -40,7 +40,6 @@ polyline.push([tabresult[k].latitude,tabresult[k].longitude])
         k++;
     }
 	
-
 var eskimon = L.polyline(polyline, {color: 'red'}).addTo(map);
 console.log(eskimon)
 
@@ -52,7 +51,8 @@ if (map0) {
     var marker = L.marker([16.0572,-16.4556]).addTo(map);
     marker.bindPopup("Dakar").openPopup();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 13,
+        maxZoom: 23,
+        noWrap: true,
         attribution: '© OpenStreetMap'
     }).addTo(map);
 }
