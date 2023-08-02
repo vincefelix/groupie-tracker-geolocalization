@@ -1,5 +1,6 @@
 var tbody = document.getElementById('tbody')
 var map0 = document.getElementById('map1')
+var polyline = []
 if (tbody) {
     var tablines = tbody.rows;
 
@@ -18,12 +19,13 @@ if (tbody) {
     // console.log(tab)
     //iterer dans tab
     // console.log(map)
-
+polyline.push([tabresult[0].latitude,tabresult[0].longitude])
     var map = L.map('map').setView([tabresult[0].latitude, tabresult[0].longitude], 13);
     var marker = L.marker([tabresult[0].latitude, tabresult[0].longitude]).addTo(map);
     marker.bindPopup(tabresult[0].city).openPopup();
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 13,
+        // noWrap: true,
         attribution: '© OpenStreetMap'
     }).addTo(map);
     console.log("ville", tabresult[0].city, "lar", tabresult[0].latitude, "lon", tabresult[0].longitude)
@@ -33,8 +35,15 @@ if (tbody) {
         console.log("ville", tabresult[k].city, "lar", tabresult[k].latitude, "lon", tabresult[k].longitude)
         var marker = L.marker([tabresult[k].latitude, tabresult[k].longitude]).addTo(map);
         marker.bindPopup(tabresult[k].city).openPopup();
+polyline.push([tabresult[k].latitude,tabresult[k].longitude])
+
         k++;
     }
+	
+
+var eskimon = L.polyline(polyline, {color: 'red'}).addTo(map);
+console.log(eskimon)
+
 }
 if (map0) {
     console.log(map0)

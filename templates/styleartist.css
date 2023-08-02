@@ -9,7 +9,9 @@
 li{
   list-style: none
 }
-
+.tabhide{
+  display: none;
+}
 .container {
   position: relative;
   width: 400px;
