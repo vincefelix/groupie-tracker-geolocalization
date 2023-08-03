@@ -164,7 +164,9 @@ func Filter(w http.ResponseWriter, r *http.Request) {
 			for _, v := range membarray {
 				size, errsize := strconv.Atoi(v)
 				if errsize == nil {
-					if len(m.Member) == size {
+					if size < 0 {
+						res_memb = append(res_memb, 0)
+					} else if len(m.Member) == size {
 						res_memb = append(res_memb, l+1)
 					}
 				}
